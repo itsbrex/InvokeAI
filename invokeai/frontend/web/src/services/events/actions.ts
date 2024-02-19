@@ -1,18 +1,16 @@
 import { createAction } from '@reduxjs/toolkit';
 import type {
-  BulkDownloadCompletedEvent,
+  BulkDownloadCompleteEvent,
   BulkDownloadFailedEvent,
   BulkDownloadStartedEvent,
-  GeneratorProgressEvent,
-  GraphExecutionStateCompleteEvent,
   InvocationCompleteEvent,
+  InvocationDenoiseProgressEvent,
   InvocationErrorEvent,
-  InvocationRetrievalErrorEvent,
   InvocationStartedEvent,
-  ModelLoadCompletedEvent,
+  ModelLoadCompleteEvent,
   ModelLoadStartedEvent,
   QueueItemStatusChangedEvent,
-  SessionRetrievalErrorEvent,
+  SessionCompleteEvent,
 } from 'services/events/types';
 
 // Create actions for each socket
@@ -41,11 +39,11 @@ export const socketInvocationError = createAction<{
 }>('socket/socketInvocationError');
 
 export const socketGraphExecutionStateComplete = createAction<{
-  data: GraphExecutionStateCompleteEvent;
+  data: SessionCompleteEvent;
 }>('socket/socketGraphExecutionStateComplete');
 
 export const socketGeneratorProgress = createAction<{
-  data: GeneratorProgressEvent;
+  data: InvocationDenoiseProgressEvent;
 }>('socket/socketGeneratorProgress');
 
 export const socketModelLoadStarted = createAction<{
@@ -53,16 +51,8 @@ export const socketModelLoadStarted = createAction<{
 }>('socket/socketModelLoadStarted');
 
 export const socketModelLoadCompleted = createAction<{
-  data: ModelLoadCompletedEvent;
+  data: ModelLoadCompleteEvent;
 }>('socket/socketModelLoadCompleted');
-
-export const socketSessionRetrievalError = createAction<{
-  data: SessionRetrievalErrorEvent;
-}>('socket/socketSessionRetrievalError');
-
-export const socketInvocationRetrievalError = createAction<{
-  data: InvocationRetrievalErrorEvent;
-}>('socket/socketInvocationRetrievalError');
 
 export const socketQueueItemStatusChanged = createAction<{
   data: QueueItemStatusChangedEvent;
@@ -72,10 +62,10 @@ export const socketBulkDownloadStarted = createAction<{
   data: BulkDownloadStartedEvent;
 }>('socket/socketBulkDownloadStarted');
 
-export const socketBulkDownloadCompleted = createAction<{
-  data: BulkDownloadCompletedEvent;
-}>('socket/socketBulkDownloadCompleted');
+export const socketBulkDownloadComplete = createAction<{
+  data: BulkDownloadCompleteEvent;
+}>('socket/socketBulkDownloadComplete');
 
-export const socketBulkDownloadFailed = createAction<{
+export const socketBulkDownloadError = createAction<{
   data: BulkDownloadFailedEvent;
-}>('socket/socketBulkDownloadFailed');
+}>('socket/socketBulkDownloadError');

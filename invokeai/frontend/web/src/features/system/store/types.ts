@@ -11,7 +11,6 @@ export type DenoiseProgress = {
   progress_image: ProgressImage | null | undefined;
   step: number;
   total_steps: number;
-  order: number;
   percentage: number;
 };
 

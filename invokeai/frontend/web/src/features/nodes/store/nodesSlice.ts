@@ -709,15 +709,15 @@ export const nodesSlice = createSlice({
     });
 
     builder.addCase(socketInvocationStarted, (state, action) => {
-      const { source_node_id } = action.payload.data;
-      const node = state.nodeExecutionStates[source_node_id];
+      const { invocation_source_id } = action.payload.data;
+      const node = state.nodeExecutionStates[invocation_source_id];
       if (node) {
         node.status = zNodeStatus.enum.IN_PROGRESS;
       }
     });
     builder.addCase(socketInvocationComplete, (state, action) => {
-      const { source_node_id, result } = action.payload.data;
-      const nes = state.nodeExecutionStates[source_node_id];
+      const { invocation_source_id, result } = action.payload.data;
+      const nes = state.nodeExecutionStates[invocation_source_id];
       if (nes) {
         nes.status = zNodeStatus.enum.COMPLETED;
         if (nes.progress !== null) {
@@ -727,8 +727,8 @@ export const nodesSlice = createSlice({
       }
     });
     builder.addCase(socketInvocationError, (state, action) => {
-      const { source_node_id } = action.payload.data;
-      const node = state.nodeExecutionStates[source_node_id];
+      const { invocation_source_id } = action.payload.data;
+      const node = state.nodeExecutionStates[invocation_source_id];
       if (node) {
         node.status = zNodeStatus.enum.FAILED;
         node.error = action.payload.data.error;
@@ -737,8 +737,8 @@ export const nodesSlice = createSlice({
       }
     });
     builder.addCase(socketGeneratorProgress, (state, action) => {
-      const { source_node_id, step, total_steps, progress_image } = action.payload.data;
-      const node = state.nodeExecutionStates[source_node_id];
+      const { invocation_source_id, step, total_steps, progress_image } = action.payload.data;
+      const node = state.nodeExecutionStates[invocation_source_id];
       if (node) {
         node.status = zNodeStatus.enum.IN_PROGRESS;
         node.progress = (step + 1) / total_steps;
@@ -746,7 +746,7 @@ export const nodesSlice = createSlice({
       }
     });
     builder.addCase(socketQueueItemStatusChanged, (state, action) => {
-      if (['in_progress'].includes(action.payload.data.queue_item.status)) {
+      if (['in_progress'].includes(action.payload.data.status)) {
         forEach(state.nodeExecutionStates, (nes) => {
           nes.status = zNodeStatus.enum.PENDING;
           nes.error = null;

@@ -62,8 +62,7 @@ describe('Common types', () => {
 
   // Misc types
   test('LoraInfo', () => assert<Extends<S['LoraInfo'], LoraInfo>>());
-  // @ts-expect-error TODO(psyche): There is no `ProgressImage` in the server types yet
-  test('ProgressImage', () => assert<Equals<ProgressImage, S['ProgressImage']>>());
+  test('ProgressImage', () => assert<Equals<ProgressImage, S['InvocationDenoiseProgressEvent']['progress_image']>>());
   test('ImageOutput', () => assert<Equals<ImageOutput, S['ImageOutput']>>());
   test('Classification', () => assert<Equals<Classification, S['Classification']>>());
 });
