@@ -6,7 +6,6 @@ from typing import Optional
 from typing_extensions import Self
 
 from invokeai.app.services.invoker import Invoker
-from invokeai.app.services.shared.invocation_context import InvocationContextData
 from invokeai.backend.model_manager import AnyModelConfig, BaseModelType, LoadedModel, ModelType, SubModelType
 from invokeai.backend.model_manager.load import ModelCache, ModelConvertCache, ModelLoaderRegistry
 from invokeai.backend.util.logging import InvokeAILogger
@@ -63,29 +62,16 @@ class ModelManagerService(ModelManagerServiceBase):
                 service.stop(invoker)
 
     def load_model_by_config(
-        self,
-        model_config: AnyModelConfig,
-        submodel_type: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
+        self, model_config: AnyModelConfig, submodel_type: Optional[SubModelType] = None
     ) -> LoadedModel:
-        return self.load.load_model(model_config, submodel_type, context_data)
+        return self.load.load_model(model_config, submodel_type)
 
-    def load_model_by_key(
-        self,
-        key: str,
-        submodel_type: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
-    ) -> LoadedModel:
+    def load_model_by_key(self, key: str, submodel_type: Optional[SubModelType] = None) -> LoadedModel:
         config = self.store.get_model(key)
-        return self.load.load_model(config, submodel_type, context_data)
+        return self.load.load_model(config, submodel_type)
 
     def load_model_by_attr(
-        self,
-        model_name: str,
-        base_model: BaseModelType,
-        model_type: ModelType,
-        submodel: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
+        self, model_name: str, base_model: BaseModelType, model_type: ModelType, submodel: Optional[SubModelType] = None
     ) -> LoadedModel:
         """
         Given a model's attributes, search the database for it, and if found, load and return the LoadedModel object.
@@ -110,7 +96,7 @@ class ModelManagerService(ModelManagerServiceBase):
         elif len(configs) > 1:
             raise ValueError(f"{base_model}/{model_type}/{model_name}: More than one model matches.")
         else:
-            return self.load.load_model(configs[0], submodel, context_data)
+            return self.load.load_model(configs[0], submodel)
 
     @classmethod
     def build_model_manager(

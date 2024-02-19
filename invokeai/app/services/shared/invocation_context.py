@@ -284,9 +284,7 @@ class ModelsInterface(InvocationContextInterface):
         # The model manager emits events as it loads the model. It needs the context data to build
         # the event payloads.
 
-        return self._services.model_manager.load_model_by_key(
-            key=key, submodel_type=submodel_type, context_data=self._data
-        )
+        return self._services.model_manager.load_model_by_key(key=key, submodel_type=submodel_type)
 
     def load_by_attrs(
         self, model_name: str, base_model: BaseModelType, model_type: ModelType, submodel: Optional[SubModelType] = None
@@ -300,11 +298,7 @@ class ModelsInterface(InvocationContextInterface):
         :param submodel: For main (pipeline models), the submodel to fetch
         """
         return self._services.model_manager.load_model_by_attr(
-            model_name=model_name,
-            base_model=base_model,
-            model_type=model_type,
-            submodel=submodel,
-            context_data=self._data,
+            model_name=model_name, base_model=base_model, model_type=model_type, submodel=submodel
         )
 
     def get_config(self, key: str) -> AnyModelConfig:

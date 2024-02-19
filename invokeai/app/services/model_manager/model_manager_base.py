@@ -6,7 +6,6 @@ from typing import Optional
 from typing_extensions import Self
 
 from invokeai.app.services.invoker import Invoker
-from invokeai.app.services.shared.invocation_context import InvocationContextData
 from invokeai.backend.model_manager.config import AnyModelConfig, BaseModelType, ModelType, SubModelType
 from invokeai.backend.model_manager.load.load_base import LoadedModel
 
@@ -72,29 +71,16 @@ class ModelManagerServiceBase(ABC):
 
     @abstractmethod
     def load_model_by_config(
-        self,
-        model_config: AnyModelConfig,
-        submodel_type: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
+        self, model_config: AnyModelConfig, submodel_type: Optional[SubModelType] = None
     ) -> LoadedModel:
         pass
 
     @abstractmethod
-    def load_model_by_key(
-        self,
-        key: str,
-        submodel_type: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
-    ) -> LoadedModel:
+    def load_model_by_key(self, key: str, submodel_type: Optional[SubModelType] = None) -> LoadedModel:
         pass
 
     @abstractmethod
     def load_model_by_attr(
-        self,
-        model_name: str,
-        base_model: BaseModelType,
-        model_type: ModelType,
-        submodel: Optional[SubModelType] = None,
-        context_data: Optional[InvocationContextData] = None,
+        self, model_name: str, base_model: BaseModelType, model_type: ModelType, submodel: Optional[SubModelType] = None
     ) -> LoadedModel:
         pass
