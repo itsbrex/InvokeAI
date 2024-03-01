@@ -143,7 +143,7 @@ class MigrateModelYamlToDb1:
                 """,
                 (
                     key,
-                    record.original_hash,
+                    record.hash,
                     json_serialized,
                 ),
             )
